@@ -1,50 +1,50 @@
-import Head from 'next/head'
-import AV from 'leancloud-storage'
-import Link from 'next/link'
-import dynamic from 'next/dynamic'
-import React, { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
-import hljs from 'highlight.js'
-import { BackTop, Button } from 'antd'
-import dayjs from 'dayjs'
+import Head from "next/head";
+import AV from "leancloud-storage";
+import Link from "next/link";
+import dynamic from "next/dynamic";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import hljs from "highlight.js";
+import { BackTop, Button } from "antd";
+import dayjs from "dayjs";
 
-import styles from './index.module.scss'
-import Layout from 'src/components/www/Layout'
-import UserInfoCenter from 'src/components/www/UserInfoCenter'
-import ArticleList from 'src/components/www/ArticleList'
-import CollectList from 'src/components/www/CollectList'
-import PostList from 'src/components/www/PostList'
-import { getUserInfoById } from 'src/service/user'
+import styles from "./index.module.scss";
+import Layout from "src/components/www/Layout";
+import UserInfoCenter from "src/components/www/UserInfoCenter";
+import ArticleList from "src/components/www/ArticleList";
+import CollectList from "src/components/www/CollectList";
+import PostList from "src/components/www/PostList";
+import { getUserInfoById } from "src/service/user";
 
-require('dayjs/locale/zh-cn')
-dayjs.locale('zh-cn')
-const relativeTime = require('dayjs/plugin/relativeTime')
-dayjs.extend(relativeTime)
+require("dayjs/locale/zh-cn");
+dayjs.locale("zh-cn");
+const relativeTime = require("dayjs/plugin/relativeTime");
+dayjs.extend(relativeTime);
 
 function MyComponent() {
-  const router = useRouter()
-  const uId = router.query.id
-  const [profile, setprofile] = useState(null)
-  const [userinfo, setuserinfo] = useState(null)
-  const [curUserInfo, setcurUserInfo] = useState(null)
-  const [activeNumber, setactiveNumber] = useState(1)
+  const router = useRouter();
+  const uId = router.query.id;
+  const [profile, setprofile] = useState(null);
+  const [userinfo, setuserinfo] = useState(null);
+  const [curUserInfo, setcurUserInfo] = useState(null);
+  const [activeNumber, setactiveNumber] = useState(1);
 
   useEffect(() => {
     async function fetchData() {
       if (uId) {
-        const res = await getUserInfoById({ id: uId })
-        setcurUserInfo(res)
+        const res = await getUserInfoById({ id: uId });
+        setcurUserInfo(res);
       }
     }
-    fetchData()
-  }, [router])
+    fetchData();
+  }, [router]);
 
-  const curUserInfoJOSN = curUserInfo ? curUserInfo.toJSON() : null
+  const curUserInfoJOSN = curUserInfo ? curUserInfo.toJSON() : null;
   return (
     <Layout
       onChange={(params) => {
-        setprofile(params.profile)
-        setuserinfo(params.userinfo)
+        setprofile(params.profile);
+        setuserinfo(params.userinfo);
       }}
     >
       <BackTop />
@@ -57,26 +57,38 @@ function MyComponent() {
             <div className={styles.right}>
               <div className={styles.nav}>
                 <div
-                  className={activeNumber === 1 ? styles.nav_item_active : styles.nav_item}
+                  className={
+                    activeNumber === 1
+                      ? styles.nav_item_active
+                      : styles.nav_item
+                  }
                   onClick={() => {
-                    setactiveNumber(1)
+                    setactiveNumber(1);
                   }}
                 >
                   文章
                 </div>
                 <div
-                  className={activeNumber === 2 ? styles.nav_item_active : styles.nav_item}
+                  className={
+                    activeNumber === 2
+                      ? styles.nav_item_active
+                      : styles.nav_item
+                  }
                   onClick={() => {
-                    setactiveNumber(2)
+                    setactiveNumber(2);
                   }}
                 >
                   收藏
                 </div>
                 {profile.showBlog && (
                   <div
-                    className={activeNumber === 3 ? styles.nav_item_active : styles.nav_item}
+                    className={
+                      activeNumber === 3
+                        ? styles.nav_item_active
+                        : styles.nav_item
+                    }
                     onClick={() => {
-                      setactiveNumber(3)
+                      setactiveNumber(3);
                     }}
                   >
                     {profile.blogName}
@@ -91,7 +103,7 @@ function MyComponent() {
         </div>
       )}
     </Layout>
-  )
+  );
 }
 
-export default MyComponent
+export default MyComponent;
