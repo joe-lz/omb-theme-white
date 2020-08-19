@@ -6,11 +6,11 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 
 import styles from './index.module.scss'
-import Layout from 'src/components/_demo/Layout'
-import PostEditor from 'src/components/_demo/PostEditor'
-import PostItem from 'src/components/_demo/PostItem'
-import NoData from 'src/components/_user/NoData'
-import Ad from 'src/components/_demo/Ad'
+import Layout from 'src/components/www/Layout'
+import PostEditor from 'src/components/www/PostEditor'
+import PostItem from 'src/components/www/PostItem'
+import NoData from 'src/components/admin/NoData'
+import Ad from 'src/components/www/Ad'
 import { getTopicList } from 'src/service/topics'
 import { getPostList } from 'src/service/post'
 import { userFollow, userUnFollow, userFolloweeList } from 'src/service/user'
@@ -91,10 +91,10 @@ function MyComponent() {
         <div className={styles.body}>
           <div className={styles.sidebar}>
             <div className={styles.sidebar_block}>
-              {/* <Link href={`/_demo/posts`}>
+              {/* <Link href={`/www/posts`}>
                 <div
                   className={
-                    router.pathname === `/_demo/posts` && Object.keys(router.query).length === 0
+                    router.pathname === `/www/posts` && Object.keys(router.query).length === 0
                       ? styles.topicItem_active
                       : styles.topicItem
                   }
@@ -102,13 +102,13 @@ function MyComponent() {
                   推荐
                 </div>
               </Link> */}
-              <Link href={`/_demo/posts?type=follow`}>
+              <Link href={`/www/posts?type=follow`}>
                 <div className={router.query.type === 'follow' ? styles.topicItem_active : styles.topicItem}>关注</div>
               </Link>
               <div className={styles.divider}></div>
               {topiclist.map((obj, key) => {
                 return (
-                  <Link href={`/_demo/posts?topic=${obj.objectId}`} key={obj.objectId}>
+                  <Link href={`/www/posts?topic=${obj.objectId}`} key={obj.objectId}>
                     <div className={router.query.topic === obj.objectId ? styles.topicItem_active : styles.topicItem}>{obj.title}</div>
                   </Link>
                 )

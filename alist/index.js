@@ -5,9 +5,9 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 import styles from './index.module.scss'
-import Layout from 'src/components/_demo/Layout'
-import ArticleItem from 'src/components/_demo/ArticleItem'
-import Ad from 'src/components/_demo/Ad'
+import Layout from 'src/components/www/Layout'
+import ArticleItem from 'src/components/www/ArticleItem'
+import Ad from 'src/components/www/Ad'
 import { getArticleList } from 'src/service/article'
 
 function MyComponent() {

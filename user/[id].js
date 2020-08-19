@@ -9,11 +9,11 @@ import { BackTop, Button } from 'antd'
 import dayjs from 'dayjs'
 
 import styles from './index.module.scss'
-import Layout from 'src/components/_demo/Layout'
-import UserInfoCenter from 'src/components/_demo/UserInfoCenter'
-import ArticleList from 'src/components/_demo/ArticleList'
-import CollectList from 'src/components/_demo/CollectList'
-import PostList from 'src/components/_demo/PostList'
+import Layout from 'src/components/www/Layout'
+import UserInfoCenter from 'src/components/www/UserInfoCenter'
+import ArticleList from 'src/components/www/ArticleList'
+import CollectList from 'src/components/www/CollectList'
+import PostList from 'src/components/www/PostList'
 import { getUserInfoById } from 'src/service/user'
 
 require('dayjs/locale/zh-cn')

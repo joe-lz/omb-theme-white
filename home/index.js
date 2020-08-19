@@ -3,7 +3,7 @@ import AV from "leancloud-storage";
 import dynamic from "next/dynamic";
 
 import styles from "./index.module.scss";
-import Layout from "src/components/_demo/Layout";
+import Layout from "src/components/www/Layout";
 
 function MyComponent() {
   return (
