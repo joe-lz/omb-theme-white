@@ -30,17 +30,14 @@ function Components(props) {
 
   const getData = async (keyname, func, setFunc) => {
     // 获取菜单
-    const local_data = localStorage.getItem(keyname);
-    const local_time = Number(localStorage.getItem(`${keyname}_time`));
-    local_data && setFunc(JSON.parse(local_data));
-    if (local_data && local_time + 5 * 60 * 1000 > Date.now()) {
+    const local_data = sessionStorage.getItem(keyname);
+    if (local_data) {
       setFunc(JSON.parse(local_data));
     } else {
       const res = await func();
       if (res) {
         setFunc(JSON.parse(JSON.stringify(res)));
-        localStorage.setItem(keyname, JSON.stringify(res));
-        localStorage.setItem(`${keyname}_time`, Date.now());
+        sessionStorage.setItem(keyname, JSON.stringify(res));
       } else {
         // 如果是CMS_UserInfo 则创建userinfo
         if (keyname === "CMS_UserInfo") {

@@ -34,6 +34,7 @@ function Components(props) {
             danger
             onClick={() => {
               localStorage.clear();
+              sessionStorage.clear();
               window.location.reload();
             }}
           >
