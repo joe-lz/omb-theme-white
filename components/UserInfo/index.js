@@ -13,10 +13,10 @@ Components.defaultProps = {
   followeeList: [],
   userinfo: null,
   time: null,
-  views: 0,
+  views: 0
 }
 
-function Components(props) {
+function Components (props) {
   const userinfoNew = JSON.parse(JSON.stringify(props.userinfo))
   // const [followeeList, setfolloweeList] = useState([])
   const [isFollowing, setisFollowing] = useState(false)
@@ -57,9 +57,16 @@ function Components(props) {
     <>
       {props.userinfo && (
         <div className={styles.userinfo}>
-          <a href={`/www/user/${userinfoNew.objectId}`} target="_blank" style={{ display: 'block' }}>
+          <a
+            href={`/www/user/${userinfoNew.objectId}`}
+            target="_blank"
+            style={{ display: 'block' }}
+          >
             <div className={styles.userinfo_content}>
-              <div className={styles.avatar} style={{ backgroundImage: `url(${userinfoNew.avatar})` }}></div>
+              <div
+                className={styles.avatar}
+                style={{ backgroundImage: `url(${userinfoNew.avatar})` }}
+              ></div>
               <div className={styles.userinfo_info}>
                 <p className={styles.nickname}>{userinfoNew.nickname}</p>
                 <p className={styles.about}>
@@ -72,13 +79,17 @@ function Components(props) {
               </div>
             </div>
           </a>
-          <div className={styles.userinfo_follow}>
+          {/* <div className={styles.userinfo_follow}>
             {!isFollowing && (
               <Button
                 // type='primary'
                 size="small"
                 // disabled={isFollowing}
                 onClick={async () => {
+                  if (!AV.User.current()) {
+                    message.error('请先登录')
+                    return
+                  }
                   if (isFollowing) {
                     userUnFollow({ userid: userinfoNew.user.objectId })
                       .then(() => {
@@ -103,7 +114,7 @@ function Components(props) {
                 {isFollowing ? '已关注' : '关注'}
               </Button>
             )}
-          </div>
+          </div> */}
         </div>
       )}
     </>

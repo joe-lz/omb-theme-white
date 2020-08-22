@@ -17,8 +17,18 @@ import CategoryList from 'src/components/www/CategoryList'
 import Ad from 'src/components/www/Ad'
 import UserInfo from 'src/components/www/UserInfo'
 import { getArticleById, updateArticle } from 'src/service/article'
-import { createCollect, deleteCollect, countCollect, getMyCollect } from 'src/service/collect'
-import { createLike, deleteLike, countLike, getMyLike } from 'src/service/likes'
+import {
+  createCollect,
+  deleteCollect,
+  countCollect,
+  getMyCollect
+} from 'src/service/collect'
+import {
+  createLike,
+  deleteLike,
+  countLike,
+  getMyLike
+} from 'src/service/likes'
 import { countComments } from 'src/service/comment'
 
 require('dayjs/locale/zh-cn')
@@ -28,16 +38,27 @@ dayjs.extend(relativeTime)
 
 const nav = []
 const renderer = new marked.Renderer()
-renderer.heading = function heading(text, level, raw, slugger) {
+renderer.heading = function heading (text, level, raw, slugger) {
   nav.push({
     text,
     level,
     raw,
     slugger,
-    id: this.options.headerPrefix + slugger.slug(raw) + '-1',
+    id: this.options.headerPrefix + slugger.slug(raw) + '-1'
   })
   if (this.options.headerIds) {
-    return '<h' + level + ' id="' + this.options.headerPrefix + slugger.slug(raw) + '">' + text + '</h' + level + '>\n'
+    return (
+      '<h' +
+      level +
+      ' id="' +
+      this.options.headerPrefix +
+      slugger.slug(raw) +
+      '">' +
+      text +
+      '</h' +
+      level +
+      '>\n'
+    )
   } // ignore IDs
   return '<h' + level + '>' + text + '</h' + level + '>\n'
 }
@@ -55,9 +76,9 @@ marked.setOptions({
   sanitize: false,
   smartLists: true,
   smartypants: false,
-  xhtml: false,
+  xhtml: false
 })
-function MyComponent() {
+function MyComponent () {
   const router = useRouter()
   const aid = router.query.id
   const [articleObj, setarticleObj] = useState(null)
@@ -76,7 +97,7 @@ function MyComponent() {
   const [myLike, setmyLike] = useState(null)
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchData () {
       if (aid) {
         const res = await getArticleById({ id: aid })
         setarticleObj(res)
@@ -86,7 +107,7 @@ function MyComponent() {
         // 访问数+1
         await updateArticle({
           articleItem: res,
-          params: { views: 1 },
+          params: { views: 1 }
         })
         setviews(res.attributes.views)
         // 收藏数量
@@ -120,7 +141,7 @@ function MyComponent() {
       countAllFuc: countCollect,
       setMyItemFunc: setmyCollect,
       setNumberFunc: setnum_collects,
-      article: articleObj,
+      article: articleObj
     })
   }
 
@@ -135,7 +156,7 @@ function MyComponent() {
       countAllFuc: countLike,
       setMyItemFunc: setmyLike,
       setNumberFunc: setnum_likes,
-      article: articleObj,
+      article: articleObj
     })
   }
 
@@ -149,8 +170,12 @@ function MyComponent() {
     countAllFuc,
     setMyItemFunc,
     setNumberFunc,
-    article,
+    article
   }) => {
+    if (!AV.User.current()) {
+      message.error('请先登录')
+      return
+    }
     if (myItem) {
       await delectMyItemFunc({ item: myItem })
       setNumberFunc(await countAllFuc({ article }))
@@ -187,31 +212,59 @@ function MyComponent() {
         <div className={styles.container}>
           <div className={styles.left}>
             <div className={styles.left_content}>
-              <UserInfo userinfo={author} time={dayjs(articleObj.createdAt).format('YYYY/MM/DD')} views={views} />
+              <UserInfo
+                userinfo={author}
+                time={dayjs(articleObj.createdAt).format('YYYY/MM/DD')}
+                views={views}
+              />
               <p className={styles.title}>{articleObjJSON.title}</p>
               <article
                 className="markdown-body"
                 dangerouslySetInnerHTML={{
-                  __html: html,
+                  __html: html
                 }}
               ></article>
               <div className={styles.actions}>
-                <div className={myLike ? styles.actions_item_active : styles.actions_item} onClick={handleLike}>
+                <div
+                  className={
+                    myLike ? styles.actions_item_active : styles.actions_item
+                  }
+                  onClick={handleLike}
+                >
                   <i className="iconfont icon-tubiaozhizuo-"></i>
-                  {num_likes ? <span className={styles.number}>{num_likes}</span> : ''}
+                  {num_likes ? (
+                    <span className={styles.number}>{num_likes}</span>
+                  ) : (
+                    ''
+                  )}
                 </div>
                 {/* <div className={styles.actions_item}>
                   <i className="iconfont icon-tubiaozhizuo--copy"></i>
                   {articleObjJSON.dislikes && <span className={styles.number}>{articleObjJSON.dislikes || 0}</span>}
                 </div> */}
-                <div className={myCollect ? styles.actions_item_active : styles.actions_item} onClick={handleCollect}>
+                <div
+                  className={
+                    myCollect ? styles.actions_item_active : styles.actions_item
+                  }
+                  onClick={handleCollect}
+                >
                   <i className="iconfont icon-star"></i>
-                  {num_collects ? <span className={styles.number}>{num_collects}</span> : ''}
+                  {num_collects ? (
+                    <span className={styles.number}>{num_collects}</span>
+                  ) : (
+                    ''
+                  )}
                 </div>
-                <ReactScroll.Link spy={true} smooth={true} to="article-comments">
+                <ReactScroll.Link
+                  spy={true}
+                  smooth={true}
+                  to="article-comments"
+                >
                   <div className={styles.actions_item}>
                     <i className="iconfont icon-message_three_points"></i>
-                    {num_comments && <span className={styles.number}>{num_comments}</span>}
+                    {num_comments ? (
+                      <span className={styles.number}>{num_comments}</span>
+                    ) : null}
                   </div>
                 </ReactScroll.Link>
               </div>

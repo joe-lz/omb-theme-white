@@ -1,24 +1,24 @@
-import Head from "next/head";
-import Link from "next/link";
-import AV from "leancloud-storage";
-import dayjs from "dayjs";
-import { useRouter } from "next/router";
-import React, { useState, useEffect } from "react";
-import { Menu, Dropdown } from "antd";
+import Head from 'next/head'
+import Link from 'next/link'
+import AV from 'leancloud-storage'
+import dayjs from 'dayjs'
+import { useRouter } from 'next/router'
+import React, { useState, useEffect } from 'react'
+import { Menu, Dropdown, message } from 'antd'
 
-import styles from "./index.module.scss";
-import Login from "../Login";
+import styles from './index.module.scss'
+import Login from '../Login'
 
 Components.defaultProps = {
   menus: [],
   profile: null,
-  userinfo: null,
-};
+  userinfo: null
+}
 
-function Components(props) {
-  const { userinfo, menus, profile } = props;
-  const curUser = AV.User.current();
-  const [curMenu, setcurMenu] = useState(null);
+function Components (props) {
+  const { userinfo, menus, profile } = props
+  const curUser = AV.User.current()
+  const [curMenu, setcurMenu] = useState(null)
 
   const menu = (
     <>
@@ -33,9 +33,9 @@ function Components(props) {
           <Menu.Item
             danger
             onClick={() => {
-              localStorage.clear();
-              sessionStorage.clear();
-              window.location.reload();
+              localStorage.clear()
+              sessionStorage.clear()
+              window.location.reload()
             }}
           >
             退出登录
@@ -43,31 +43,31 @@ function Components(props) {
         </Menu>
       )}
     </>
-  );
+  )
 
-  const router = useRouter();
+  const router = useRouter()
   useEffect(() => {
     if (router) {
       menus.map((obj) => {
         if (router.query.cate1 === obj.key) {
-          setcurMenu(obj);
+          setcurMenu(obj)
         }
-        return obj;
-      });
+        return obj
+      })
     }
-  }, [router]);
+  }, [router])
 
   return (
     <div>
       <Head>
         {profile && (
           <title>
-            {profile.title || "oh my blog"}
-            {curMenu ? `-${curMenu.title}` : ""}
-            {router.pathname.includes("www/home") ? "-首页" : ""}
-            {router.pathname.includes("www/posts")
+            {profile.title || 'oh my blog'}
+            {curMenu ? `-${curMenu.title}` : ''}
+            {router.pathname.includes('www/home') ? '-首页' : ''}
+            {router.pathname.includes('www/posts')
               ? `-${profile.blogName}`
-              : ""}
+              : ''}
           </title>
         )}
       </Head>
@@ -82,7 +82,7 @@ function Components(props) {
             <Link href="/www/home">
               <div
                 className={
-                  router.pathname.includes("www/home")
+                  router.pathname.includes('www/home')
                     ? styles.nav_link_item_active
                     : styles.nav_link_item
                 }
@@ -91,7 +91,7 @@ function Components(props) {
               </div>
             </Link>
             {menus.map((obj) => {
-              let toLink = `/www/alist?cate1=${obj.key}`;
+              const toLink = `/www/alist?cate1=${obj.key}`
               // if (obj.children && obj.children.length > 0) {
               //   toLink = `/www/alist?cate1=${obj.key}&cate2=${obj.children[0].key}`
               // }
@@ -108,13 +108,13 @@ function Components(props) {
                     {obj.title}
                   </div>
                 </Link>
-              );
+              )
             })}
-            {profile.showBlog && (
+            {/* {profile.showBlog && (
               <Link href="/www/posts">
                 <div
                   className={
-                    router.pathname.includes("www/posts")
+                    router.pathname.includes('www/posts')
                       ? styles.nav_link_item_active
                       : styles.nav_link_item
                   }
@@ -122,7 +122,16 @@ function Components(props) {
                   {profile.blogName}
                 </div>
               </Link>
-            )}
+            )} */}
+            <div
+              className={styles.nav_link_item}
+              onClick={() => {
+                message.info('开发中，即将开放')
+              }}
+            >
+              <i className="iconfont icon-message_three_points"></i>
+              留言区
+            </div>
           </div>
           {curUser ? (
             <Dropdown overlay={menu} arrow placement="bottomRight">
@@ -178,13 +187,13 @@ function Components(props) {
                     {obj.title}
                   </div>
                 </Link>
-              );
+              )
             })}
           </div>
         </div>
       )}
     </div>
-  );
+  )
 }
 
-export default Components;
+export default Components

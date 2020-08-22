@@ -44,7 +44,10 @@ function Components(props) {
               </span>
               <span className={styles.time}>・{time}</span>
               <span className={styles.time}>
-                ・{`${props.data.category_2_title}`}
+                ・
+                {`${
+                  props.data.category_2_title || props.data.category_1_title
+                }`}
               </span>
             </div>
             <div className={styles.articleItem_content}>
