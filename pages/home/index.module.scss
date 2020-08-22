@@ -37,3 +37,17 @@
     }
   }
 }
+
+@media (max-width: 400px) {
+  .container {
+    .title {
+      font-size: 24px;
+    }
+    .desc {
+      padding: 0 50px;
+      line-height: 20px;
+      font-size: 14px;
+      text-align: center;
+    }
+  }
+}
